@@ -95,7 +95,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
     it.only ('Selecionar produto pelo valor', function () {
         cy.get('#product')
-        .select(2)
+        .select(1)
         .should('have.value', 'blog')
 
     })
