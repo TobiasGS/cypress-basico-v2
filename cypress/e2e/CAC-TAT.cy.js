@@ -8,7 +8,9 @@
 
 
 describe('Central de Atendimento ao Cliente TAT', function() {
+    const THREE_SECONDS_IN_MS = 3000
    beforeEach(function() {
+    
         cy.visit('https://cac-tat.s3.eu-central-1.amazonaws.com/index.html')
 
    })    
@@ -17,6 +19,9 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         // .type(longText, { delay: 0 } = faz com que a digitação do texto seja rapida
         // deve criar a tag const longText = 'exemplo'
         const longText = 'Testes, Teste, Teste, Teste Testes, Teste, Teste, Teste Testes, Teste, Teste, Teste Testes, Teste, Teste, TesteTestes, Teste, Teste, Teste Testes, Teste, Teste, Teste Testes, Teste, Teste, Teste Testes, Teste, Teste, Teste'
+        
+        cy.clock()
+
         cy.get('#firstName').type('Tobias')
         cy.get('#lastName').type('Gomes')
         cy.get('#email').type('tobiasg@exemplo.com')
@@ -24,6 +29,10 @@ describe('Central de Atendimento ao Cliente TAT', function() {
         cy.get('button[type="submit"]').click()
 
         cy.get('.success').should('be.visible')
+
+        cy.tick(THREE_SECONDS_IN_MS) // CONGELA O TEMPO PARA VALIDAR A MENSAGEM DEPOIS QUE "SOME"
+
+        cy.get('.success').should('not.be.visible')
     })
 
     it ('Exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', function () {
